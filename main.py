@@ -24,12 +24,110 @@ shrek = (" ⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀
 
 rock_eyebrow =("⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠛⠛⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⠋⠈⠀⠀⠀⠀⠐⠺⣖⢄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡏⢀⡆⠀⠀⠀⢋⣭⣽⡚⢮⣲⠆⠀⠀⠀⠀⠀⠀⢹⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡇⡼⠀⠀⠀⠀⠈⠻⣅⣨⠇⠈⠀⠰⣀⣀⣀⡀⠀⢸⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡇⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣟⢷⣶⠶⣃⢀⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⠀⠈⠓⠚⢸⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⢀⡠⠀⡄⣀⠀⠀⠀⢻⠀⠀⠀⣠⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠐⠉⠀⠀⠙⠉⠀⠠⡶⣸⠁⠀⣠⣿⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣦⡆⠀⠐⠒⠢⢤⣀⡰⠁⠇⠈⠘⢶⣿⣿⣿⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠠⣄⣉⣙⡉⠓⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣀⣀⠀⣀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿")
 
-shrek_or_rock = random.randint(1,100)# beans
+# Intro and Credit Card System
+shrek_or_rock = random.randint(1,100)
 if shrek_or_rock == 69:
   slowprint(Fore.GREEN + rock_eyebrow, 240)
 else:
   slowprint(Fore.GREEN + shrek, 240)
 
+print("Welcome to Shrek's Swamp Casino! \U0001F633")
+print("Here, winning is so easy that it feels as dirty as my outhouse!\n")
+global money, credit_balance_file_directory
+
+try:
+	credit_card = int(input("What is your credit card number?\n\n>>> "))
+except:
+	print("It's called a credit card NUMBER \U0001F644\n")
+	sys.exit()
+
+def call_credit_balance(cardNum):
+	global money, credit_card, credit_balance_file_directory
+
+	credit_balance_file_directory = (f"cards/{cardNum}.txt")
+
+	# If the balance file exists
+	if os.path.isfile(f"{credit_balance_file_directory}"):
+		with open (f"{credit_balance_file_directory}", "r") as f:
+			money = f.read()
+			#print(f"Money: {money} @15")
+			f.close()
+
+	# If not, open it and write 500 encoded
+	else:
+		with open (f"{credit_balance_file_directory}", "w") as f:
+			money = 500
+			f.write(f"{money}")
+			f.close()
+			#print(f"Money: written to 500 @24")
+
+	x = open(credit_balance_file_directory, 'r')
+	money = x.read()
+	x.close()
+			
+	slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
+	# Change to int
+	money = int(money)
+
+call_credit_balance(credit_card)
+
+def change_credit_card_balance(toAdd):
+	# Read current balance from global credit card file
+	x = open(credit_balance_file_directory, 'r')
+	current_balance = x.read()
+	x.close()
+
+	# Add the new balance to the parameter "toAdd"
+	new_balance = current_balance + toAdd
+
+	# Clears the file to make it read zero
+	x = open(credit_balance_file_directory, 'w+')
+	x.close()	
+
+	# Finally, write the calculated amount to the file
+	x = open(credit_balance_file_directory, 'a')
+	x.write(new_balance)
+	x.close()
+
+# Game selection
+def game_selection():
+  wrongspell = True
+  Games = ["Roulette","Numpicker","Slots","Blackjack","Higher or Lower","Ten Seconds"]
+  while wrongspell == True:
+    global money
+    slowprint("What game would you like to play?", 50)
+    print(*Games, sep=', ')
+    print("Input \"money\" to display your balance.\n")
+    choice = input(" > ")
+    choice = choice.lower()
+    if choice == "money":
+      print(f"You have ඞ {money}.")
+    elif choice == "roulette":
+      roulette()
+      wrongspell = False
+    elif choice == "numpicker":
+      numpicker()
+      wrongspell = False
+    elif choice == "slots":
+      slotmac()
+      #wrongspell == False
+    #elif choice == "higher or lower":
+      #hoL()
+      #wrongspell == False
+    elif choice == "blackjack":
+      Blackjack()
+      wrongspell = False
+    elif choice == "ten seconds":
+      ten_seconds()
+      wrongspell = False
+    elif choice == "↑↑↓↓←→←→ba":
+      konami_gen = random.randint(1,11)
+      konami_gen_str = str(konami_gen)
+      print(f"SECRET UNLOCKED! You gained {konami_gen_str} free amogués!")
+      money = money + konami_gen
+      print(f"You now have ඞ {money}.")
+
+# Blackjack (idk if it works)
 def Blackjack():
   class player():
     cards = []
@@ -98,7 +196,8 @@ def numpicker():
       bet = bet * 2
       money = money + bet
       print(F"You now have ඞ {money}.")
-		
+
+  game_selection()
 
 # Roulette
 def roulette():
@@ -131,7 +230,7 @@ def roulette():
     else:
         time.sleep(0.5)
         print("Wrong number. Bad luck, bozo!")
-
+    game_selection()
 
 
 
@@ -184,44 +283,10 @@ def slotmac():
         print(f"You now have ඞ {money}.")
       else:
         print("You lose.")
+  game_selection()
 
-# Intro and Credit Card System
-print("Welcome to Shrek's Swamp Casino! \U0001F633")
-print("\n\nHere, winning is so easy that it feels as dirty as my outhouse!\n\n")
-global money
 
-credit_card = (input("What is your credit card number?\n> "))
 
-def call_credit_balance(cardNum):
-	global money, credit_card
-
-	credit_balance_file_directory = (f"cards/{cardNum}.txt")
-
-	# If the balance file exists
-	if os.path.isfile(f"{credit_balance_file_directory}"):
-		with open (f"{credit_balance_file_directory}", "r") as f:
-			money = f.read()
-			#print(f"Money: {money} @15")
-			f.close()
-
-	# If not, open it and write 500 encoded
-	else:
-		with open (f"{credit_balance_file_directory}", "w") as f:
-			money = 500
-			f.write(f"{money}")
-			f.close()
-			#print(f"Money: written to 500 @24")
-
-	x = open(credit_balance_file_directory, 'r')
-	money = x.read()
-	x.close()
-			
-	slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
-
-call_credit_balance(credit_card)
-
-wrongspell = True
-Games = ["Roulette","Numpicker","Slots","Blackjack","Higher or Lower","Ten Seconds"]
 
 def wordle():
   import wordle
@@ -243,11 +308,13 @@ def HoL():
       money = money + bet
     else:
       money = money - (bet * 2)
-
+  #money = int(money)
+  game_selection()
+      
 # Ten Seconds - press enter after EXACTLY 10 sec to win!
 def ten_seconds():
   global money
-  ten_sec = input("Begin the countdown! It will cost ඞ 10.")
+  print("Begin the countdown! It will cost ඞ 10.")
   if money < 10:
     print("You are too poor lololol get gud kid")
   else:
@@ -264,7 +331,7 @@ def ten_seconds():
     ten_sec_text = input("Begin! Press [ENTER] after 10 seconds!")
     end = time.time()
     duration = round(end - start,2)
-    print(f"You pressed [ENTER] after {duration}.")
+    print(f"You pressed [ENTER] after {duration} seconds.")
     if duration > 10.33:
       print("Too slow!")
     elif duration < 9.67:
@@ -286,48 +353,18 @@ def ten_seconds():
       print("You win ඞ 100!")
       money = money + 100
       print(f"You now have {money}!")
+  game_selection()
       
-# Game selection
-while wrongspell == True:
-  global money
-  print("What game would you like to play?")
-  print(*Games, sep=', ')
-  print("Input \"money\" to display your balance.")
-  choice = input(" > ")
-  if choice == "money":
-    print(f"You have ඞ {money}.")
-  elif choice == "roulette":
-    roulette()
-    wrongspell = False
-  elif choice == "numpicker":
-    numpicker()
-    wrongspell = False
-  elif choice == "slots":
-    slotmac()
-    #wrongspell == False
-  #elif choice == "higher or lower":
-    #hoL()
-    #wrongspell == False
-  elif choice == "blackjack":
-    Blackjack()
-    wrongspell = False
-  elif choice == "ten seconds":
-    ten_seconds()
-    wrongspell = False
-  elif choice == "↑↑↓↓←→←→ba":
-    konami_gen = random.randint(1,11)
-    konami_gen_str = str(konami_gen)
-    print(f"SECRET UNLOCKED! You gained {konami_gen_str} free amogués!")
-    money = money + konami_gen
-    print(f"You now have ඞ {money}.")
+
     
 
+game_selection()
 
 
 
-
-numpicker()
-roulette()
-hoL()
-Blackjack()
-slotmac()
+#numpicker()
+#roulette()
+#hoL()
+#Blackjack()
+#slotmac()
+#ten_seconds()
