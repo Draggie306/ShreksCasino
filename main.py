@@ -1,6 +1,25 @@
-import random, asyncio, time, base64, emoji, os, sys
+version_number = "v0.1"
+
+"""
+TO DO LIST:
+• Fix the code
+• Improve the file handling further
+"""
+
+"""
+HOW TO USE MY CODE
+• To add a value to a card's balance, paste in this: 
+change_credit_card_balance(CHANGE_THIS_TO_AN_INTEGER_TO_ADD_BY)
+
+• To get a credit balance, paste in this: 
+call_credit_balance(credit_card)
+
+"""
+
+
+import random, asyncio, time, base64, emoji, os, sys, colorama, webbrowser, itertools
 global money # Currency Symbol: ඞ (Amogués)
-import colorama
+
 from colorama import Fore, Style
 #import discord
 #print("Me looking at your mother \U0001F346 \U0001F351	\U0001F4A7	")
@@ -9,7 +28,29 @@ def slowprint(s, egg: int):
 		sys.stdout.write(c)
 		sys.stdout.flush()
 		time.sleep(1./egg)
+
+def dev_tools():#	Call this when you want details for debugging
+	print(f"\n--------- DevTools subroutine --------- \nMoney (variable) = {money}")
+	call_credit_balance_first(credit_card)
+	print(f"Money from file = {money}")
+	print(f"Credit card number = {credit_card}")
+	path, dirs, files = next(os.walk("cards/"))
+	cards = len(files)
+	print(f"Money accounts = {cards}")
+	print(f"--------- End of DevTools --------- \n\n")
 		
+#MAKE THIS WORK!!! <- No
+def slowprintlist(s: list, egg: int):
+	for c in s:
+		sys.stdout.write(c)
+		sys.stdout.flush()
+		time.sleep(1./egg)
+
+def spinning_cursor():
+    while True:
+        for cursor in '|/-\\':
+            yield cursor
+
 # Emoji List:
 #https://unicode.org/emoji/charts/full-emoji-list.html
 
@@ -17,7 +58,8 @@ def slowprint(s, egg: int):
 
 # How to use the emojis:
 #https://www.journaldev.com/52243/python-emoji-module#:~:text=Python%20Emoji%20Module%20%E2%80%93%20How%20to%20use%20emojis,Implementing%20Python%20Emoji%20module.%20...%204%20Conclusion.%20
-
+		
+#webbrowser.open("https://soap2day.ac/MczozMToiOTE2fHwxMzguNjguMTUyLjE5Nnx8MTY0NjM4OTYMil7.html << copy paste(use with vpn and dont use on school wifi :)")
 
 #print(Style.BRIGHT + Fore.GREEN)
 shrek = (" ⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆\n ⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿\n ⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀\n ⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀ \n ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉\n\n")
@@ -29,19 +71,44 @@ shrek_or_rock = random.randint(1,100)
 if shrek_or_rock == 69:
   slowprint(Fore.GREEN + rock_eyebrow, 240)
 else:
-  slowprint(Fore.GREEN + shrek, 240)
+  #slowprint(Fore.GREEN + shrek, 240)
+	print(Fore.GREEN + shrek)
 
 print("Welcome to Shrek's Swamp Casino! \U0001F633")
 print("Here, winning is so easy that it feels as dirty as my outhouse!\n")
 global money, credit_balance_file_directory
 
+
 try:
-	credit_card = int(input("What is your credit card number?\n\n>>> "))
+	credit_card = input("What is your credit card number?\n\n>>> ")
+	credit_card = int(credit_card)
+	dev_mode = False
+	if credit_card == 6969:
+		dev_mode = True
+		dev = "Draggie"
+	if dev_mode == True:
+		if dev == "Draggie":
+			print(Fore.BLUE + f"\n\nDeveloper mode enabled - {dev}")
 except:
 	print("It's called a credit card NUMBER \U0001F644\n")
 	sys.exit()
 
-def call_credit_balance(cardNum):
+def call_credit_balance(credit_card):
+	global money, credit_card, credit_balance_file_directory
+
+	credit_balance_file_directory = (f"cards/{credit_card}.txt")
+
+	with open (f"{credit_balance_file_directory}", "r") as f:
+		money = f.read()
+		f.close()
+
+	money = int(money)
+	print(f"You now have {money}.")
+			
+	#slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
+	# Change to int
+
+def call_credit_balance_first(cardNum):
 	global money, credit_card, credit_balance_file_directory
 
 	credit_balance_file_directory = (f"cards/{cardNum}.txt")
@@ -50,26 +117,39 @@ def call_credit_balance(cardNum):
 	if os.path.isfile(f"{credit_balance_file_directory}"):
 		with open (f"{credit_balance_file_directory}", "r") as f:
 			money = f.read()
-			#print(f"Money: {money} @15")
 			f.close()
 
 	# If not, open it and write 500 encoded
 	else:
 		with open (f"{credit_balance_file_directory}", "w") as f:
 			money = 500
-			f.write(f"{money}")
+			f.write(str(money))
 			f.close()
-			#print(f"Money: written to 500 @24")
+			#print(f"Money: written to 500")
 
+	# To prevent weird errors, read money back from the file.
 	x = open(credit_balance_file_directory, 'r')
 	money = x.read()
 	x.close()
-			
-	slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
-	# Change to int
+		
 	money = int(money)
 
-call_credit_balance(credit_card)
+	if money <= 0:
+		print("You're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n\n\n\n")
+		sys.exit()
+	#slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
+	# Change to int
+			
+def cool_bank_contacting():
+	spinner = itertools.cycle('\\|/-')
+	spinCount = 0
+	while spinCount < (random.randint(10,40)):
+	  sys.stdout.write(f"Contacting bank... {next(spinner)}")   # write the next character
+	  sys.stdout.flush()                # flush stdout buffer (actual character display)
+	  sys.stdout.write('\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b')            # erase the last written char
+	  time.sleep(0.1)
+	  spinCount = spinCount + 1
+	sys.stdout.write(f"Contacting bank... Done! The ping to the bank is {spinCount / 10} seconds.")
 
 def change_credit_card_balance(toAdd):
 	# Read current balance from global credit card file
@@ -78,27 +158,39 @@ def change_credit_card_balance(toAdd):
 	x.close()
 
 	# Add the new balance to the parameter "toAdd"
-	new_balance = current_balance + toAdd
+	new_balance = int(current_balance) + int(toAdd)
+	new_balance = (str(new_balance))
 
 	# Clears the file to make it read zero
 	x = open(credit_balance_file_directory, 'w+')
 	x.close()	
 
 	# Finally, write the calculated amount to the file
-	x = open(credit_balance_file_directory, 'a')
+	x = open(credit_balance_file_directory, 'w')
 	x.write(new_balance)
 	x.close()
 
+call_credit_balance_first(credit_card)
+
+try:
+	if dev_mode == True:
+		print(f"\nSuccessfully contacted your bank. Your card's balance is ඞ {money}.")
+except:
+	cool_bank_contacting()
+	slowprint(f"\nSuccessfully contacted your bank. Your card's balance is ඞ {money}.", 240)
+
 # Game selection
 def game_selection():
+  global money
   wrongspell = True
-  Games = ["Roulette","Numpicker","Slots","Blackjack","Higher or Lower","Ten Seconds"]
+  Games = ["Roulette","Numpicker","Slots","Blackjack","Higher or Lower","Ten Seconds","shrek1","shrek2","shrek musical"]
   while wrongspell == True:
-    global money
-    slowprint("What game would you like to play?", 50)
+    slowprint("\nWhat game would you like to play?\n", 50)
+    if dev_mode == True:
+      dev_tools()
     print(*Games, sep=', ')
-    print("Input \"money\" to display your balance.\n")
-    choice = input(" > ")
+    print("You can also input \"money\" to display your balance.\n")
+    choice = input(">>> ")
     choice = choice.lower()
     if choice == "money":
       print(f"You have ඞ {money}.")
@@ -120,12 +212,20 @@ def game_selection():
     elif choice == "ten seconds":
       ten_seconds()
       wrongspell = False
-    elif choice == "↑↑↓↓←→←→ba":
+    elif choice == "shrek1":
+      print("https://soap2day.ac/MczozMToiOTE2fHwxMzguNjguMTUyLjE5Nnx8MTY0NjQxMzcwMyI7.html << copy paste(use with vpn and dont use on school wifi :)")
+    elif choice == "shrek2":
+      print("https://soap2day.ac/MczozMToiOTA4fHwxMzguNjguMTUyLjE5Nnx8MTY0NjQxMzc1NCI7.html")
+    elif choice == "shrek musical":
+      print("https://soap2day.ac/MczozMjoiOTcyNHx8MTM4LjY4LjE1Mi4xOTZ8fDE2NDY0MTM4NTAiOw.html")
+    elif choice == "↑↑↓↓←→←→ba" or choice == "^^vv<><>ba":
       konami_gen = random.randint(1,11)
       konami_gen_str = str(konami_gen)
       print(f"SECRET UNLOCKED! You gained {konami_gen_str} free amogués!")
       money = money + konami_gen
       print(f"You now have ඞ {money}.")
+    elif choice == "dev":
+      raise SystemExit(f'{slowprint("Deez FAT balls are in your mouth right now!", 10)}')
 
 # Blackjack (idk if it works)
 def Blackjack():
@@ -171,31 +271,35 @@ def numpicker():
     quit()
   number = int(input("Pick a number from 1 to 30 >"))
   evens = ["2","4","6","8","10","12","14","16","18","20","22","24","26","28","30"]
-  if number == evens:
+  if number in evens:
     print("Well done! 2× bonus!")
     bet = bet * 2
     money = money + bet
-    print(F"You now have ඞ{money}.")#	Class
+    change_credit_card_balance(money)
+    call_credit_balance(credit_card)#	Class
   primes = ["1","2","3","5","7","11","13","17","19","23","29"]
   if number == primes:
     print("Well done! 5× bonus!")
     bet = bet * 5
     money = money + bet
+    change_credit_card_balance(money)
     print("well done, 5x bonus!")
-    print(F"You now have ඞ {money}.")
+    call_credit_balance(credit_card)
 
     
     if number == "10" or "20" or "30":
       bet = bet * 3
       money = money + bet
+      change_credit_card_balance(money)
       print("good job, 3x bonus!")
-      print(F"You now have ඞ {money}.")
+      call_credit_balance(credit_card)
     
     if number < 5:
       print("You get a 2× bonus, WOO HOO!")
       bet = bet * 2
       money = money + bet
-      print(F"You now have ඞ {money}.")
+      change_credit_card_balance(money)
+      call_credit_balance(credit_card)
 
   game_selection()
 
@@ -209,27 +313,30 @@ def roulette():
     colour_list = ["red","black"]
     colour1 = random.choice(colour_list)
     if colour == colour1:
-      print("You got the right colour! You won £100!")
+      print("You got the right colour! You won ඞ 100!")
       money = money + 100
-      print(F"You now have ඞ {money}.")
+      change_credit_card_balance(money)
+      call_credit_balance(credit_card)
     else:
       print("wrong colour")
     if guess == roulette1:
         print("BIG WIN! You won £1000!")
         money = money + 1000
-        print(F"You now have ඞ {money}.")
+        change_credit_card_balance(1000)
+        call_credit_balance(credit_card)
         treble = input("Do you want a chance to treble it?>")
         if treble == "yes":
             guess2 = input("What will the roulette spin be? >")
             roulette2 = random.randint(1,30)
         if guess2 == roulette2:
             money = money * 3
-            print(f"You now have ඞ {money}.")
+            change_credit_card_balance(money)
+            call_credit_balance(credit_card)
         elif treble == "no":
           print("well youre boring")
     else:
         time.sleep(0.5)
-        print("Wrong number. Bad luck, bozo!")
+        print(f"Wrong number ({roulette1}). Bad luck, bozo!")
     game_selection()
 
 
@@ -256,33 +363,35 @@ def find_3_in_row(slotmac_result):
   else:
     in_a_row = 1
   return in_a_row
+
+# Slot Machine - continued
 def slotmac():
   global money
-  slots = input("Pull the slot machine! It will cost ඞ 10.")
   if money < 10:
     print("You are too poor lololol get gud kid")
   else:
+    print("Pulling the slot machine... You have been charged ඞ 10.")
     money = money - 10
-    print(f"You now have ඞ {money}.")
-    slots = slots.lower()
-    pull = ["\U0001F34B","\U0001F352","\U0001F34A","\U0001F680"]
+    change_credit_card_balance(-10)
+    call_credit_balance(credit_card)
+    pull = ["\U0001F34B","\U0001F352","\U0001F34A","\U0001F346"]
     slotmac_result = []
-    if slots == "yes" or slots == "y":
-      for i in range(1,4):
-        goodluck = random.choice(pull)
-        slotmac_result.append(goodluck)
-      print(slotmac_result)
-      three_in_a_row = find_3_in_row(slotmac_result)
-      if three_in_a_row == 3:
-        print("3 IN A ROW! You win ඞ 200!")
-        money = money + 200
-        print(f"You now have ඞ {money}.")
-      elif three_in_a_row == 2:
-        print("2 in a row! You win ඞ 30!")
-        money = money + 30
-        print(f"You now have ඞ {money}.")
-      else:
-        print("You lose.")
+    for i in range(1,4):
+      goodluck = random.choice(pull)
+      slotmac_result.append(f"{goodluck} ")
+    slowprintlist(slotmac_result,1)
+    three_in_a_row = find_3_in_row(slotmac_result)
+    if three_in_a_row == 3:
+      print("\n3 IN A ROW! You win ඞ 200!")
+      money = money + 200
+      change_credit_card_balance(200)
+      call_credit_balance(credit_card)
+    elif three_in_a_row == 2:
+      print("\n2 in a row! You win ඞ 30!")
+      money = money + 30
+      change_credit_card_balance(30)
+    else:
+      print("You lost ඞ 10.")
   game_selection()
 
 
@@ -315,6 +424,7 @@ def HoL():
 def ten_seconds():
   global money
   print("Begin the countdown! It will cost ඞ 10.")
+  time.sleep(0.5)
   if money < 10:
     print("You are too poor lololol get gud kid")
   else:
@@ -328,31 +438,39 @@ def ten_seconds():
     print("The game will start in 1...")
     time.sleep(1)
     start=time.time()
-    ten_sec_text = input("Begin! Press [ENTER] after 10 seconds!")
+    ten_sec_text = input("Begin! Press [ENTER] in 10 seconds!")
     end = time.time()
     duration = round(end - start,2)
     print(f"You pressed [ENTER] after {duration} seconds.")
     if duration > 10.33:
       print("Too slow!")
+      call_credit_balance(credit_card)
     elif duration < 9.67:
       print("Too fast!")
+      call_credit_balance(credit_card)
     elif duration > 10 and duration < 10.33:
       dura_diff = duration - 10
+      dura_diff = round(dura_diff,2)
       print(f"You were {dura_diff} seconds too slow.")
       ten_sec_reward = dura_diff * 10
       ten_sec_reward = ten_sec_reward.round(0)
-      print(f"You win ඞ {ten_sec_reward}.")
+      change_credit_card_balance(ten_sec_reward)
+      call_credit_balance(credit_card)
     elif duration > 10 and duration < 10.33:
       dura_diff = 10 - duration
+      dura_diff = round(dura_diff,2)
       print(f"You were {dura_diff} seconds too fast.")
       ten_sec_reward = dura_diff * 10
-      ten_sec_reward = ten_sec_reward.round(0)
+      ten_sec_reward = round(ten_sec_reward,0)
       print(f"You win ඞ {ten_sec_reward}.")
+      change_credit_card_balance(ten_sec_reward)
+      call_credit_balance(credit_card)
     elif duration == 10:
       print("You were bang on 10 seconds!")
-      print("You win ඞ 100!")
-      money = money + 100
-      print(f"You now have {money}!")
+      print("You win ඞ 250!")
+      money = money + 250
+      change_credit_card_balance(250)
+      call_credit_balance(credit_card)
   game_selection()
       
 
