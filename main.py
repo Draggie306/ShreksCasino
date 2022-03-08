@@ -243,8 +243,8 @@ def game_selection():
             konami_gen_str = str(konami_gen)
             print(
                 f"SECRET UNLOCKED! You gained {konami_gen_str} free amogués!")
-            money = money + konami_gen
-            print(f"You now have ඞ {money}.")
+            change_credit_card_balance(konami_gen)
+            call_credit_balance(credit_card)
         elif choice == "dev":
             raise SystemExit(
                 f'{slowprint("Deez FAT balls are in your mouth right now!", 10)}'
@@ -256,7 +256,8 @@ def game_selection():
           slowprint(shrek_script, 120)
         elif choice == "money to 0":
           money = 0
-          #grei
+          print("you now have",money)
+          #greifing
 
 
 # Blackjack (idk if it works)
@@ -460,8 +461,6 @@ def find_3_in_row(slotmac_result):
     else:
         in_a_row = 1
     return in_a_row
-
-
 # Slot Machine - continued
 def slotmac():
     global money
@@ -469,24 +468,22 @@ def slotmac():
         print("You are too poor lololol get gud kid")
     else:
         print("Pulling the slot machine... You have been charged ඞ 10.")
-        money = money - 10
         change_credit_card_balance(-10)
         call_credit_balance(credit_card)
         pull = ["\U0001F34B", "\U0001F352", "\U0001F34A", "\U0001F346"]
         slotmac_result = []
         for i in range(1, 4):
-            goodluck = random.choice(pull)
-            slotmac_result.append(f"{goodluck} ")
+          goodluck = random.choice(pull)
+          slotmac_result.append(f"{goodluck} ")
+        time.sleep(0.4)
         slowprintlist(slotmac_result, 1)
         three_in_a_row = find_3_in_row(slotmac_result)
         if three_in_a_row == 3:
             print("\n3 IN A ROW! You win ඞ 200!")
-            money = money + 200
             change_credit_card_balance(200)
             call_credit_balance(credit_card)
         elif three_in_a_row == 2:
             print("\n2 in a row! You win ඞ 30!")
-            money = money + 30
             change_credit_card_balance(30)
         else:
             print("You lost ඞ 10.")
