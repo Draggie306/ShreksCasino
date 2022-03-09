@@ -24,6 +24,7 @@ x = True
 while x == True:
   objects_ive_shoved = ["small glass jars", "broomstick handles", "balls", "fingers", "Brite Bomber","ur mom","Ismail","Jacob Eke-Cunis", "Joe and Charlie Sewards", "men", "women", "young boys", "Benjamin Ford", "Will Byrne", "Fortnite books", "ben ps", "Discord Nitro", "Harry Barwick", "Vytautus", "Amogus", "beans", "hydrocarbons", "Samuel Partrige", "Mrs Arnold (it was disgusting)", "Sam Fisher", "Jack Fisher", "Jess Fisher", "Chloë Fisher", "adolfus", "joesphy spaghetti", "tigger_4", "emilite shards"]
   print(f"\"Today, I have used {random.choice(objects_ive_shoved)},\" said Shrek.")
+  print(f'I also really love {random.choice(objects_ive_shoved)}'[::-1])
   x = False
 def dev_tools():  #	Call this when you want details for debugging
     print(
@@ -196,7 +197,7 @@ def game_selection():
     wrongspell = True
     Games = [
         "Roulette", "Numpicker", "Slots", "Blackjack", "Higher or Lower",
-        "Ten Seconds", "shrek1", "shrek2", "shrek musical", "money to 0"
+        "Ten Seconds", "shrek1", "shrek2", "shrek musical"
     ]
     while wrongspell == True:
         slowprint("\nWhat game would you like to play?\n", 50)
@@ -470,23 +471,29 @@ def slotmac():
         print("Pulling the slot machine... You have been charged ඞ 10.")
         change_credit_card_balance(-10)
         call_credit_balance(credit_card)
-        pull = ["\U0001F34B", "\U0001F352", "\U0001F34A", "\U0001F346"]
+        pull = ["\U0001F34B", "\U0001F352", "\U0001F34A", "\U0001F346","\U0001F347","\U0001F34C","\U0001F34E","\U0001F353"]
         slotmac_result = []
         for i in range(1, 4):
-          goodluck = random.choice(pull)
-          slotmac_result.append(f"{goodluck} ")
+            goodluck = random.choice(pull)
+            slotmac_result.append(f"{goodluck} ")
         time.sleep(0.4)
         slowprintlist(slotmac_result, 1)
         three_in_a_row = find_3_in_row(slotmac_result)
         if three_in_a_row == 3:
-            print("\n3 IN A ROW! You win ඞ 200!")
-            change_credit_card_balance(200)
+          if slotmac_result[0] == "\U0001F346":
+            print("\n3 IN A ROW! You win ඞ 500 × 5 \U0001F346 bonus!")
+            change_credit_card_balance(2500)
+            call_credit_balance(credit_card)
+          else:
+            print("\n3 IN A ROW! You win ඞ 500!")
+            change_credit_card_balance(500)
             call_credit_balance(credit_card)
         elif three_in_a_row == 2:
-            print("\n2 in a row! You win ඞ 30!")
-            change_credit_card_balance(30)
+          print("\n2 in a row! You win ඞ 25!")
+          change_credit_card_balance(25)
+          call_credit_balance(credit_card)
         else:
-            print("You lost ඞ 10.")
+          print("\nYou lose...")
     game_selection()
 
 
