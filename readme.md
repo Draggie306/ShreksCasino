@@ -11,4 +11,7 @@
 `call_credit_balance(credit_card)` (`credit_card` is already determined from a user's earlier input). This will change the variable `money` to the money from the file. It will also print `You now have {money}`.
 
 # OTHER STUFF
-- Use the **Version Control** tab on the left when you want to save some code you've done. This is useful in case we need to roll back the code quickly and easily
+- Use the **Version Control** tab on the left when you want to save some code you've done. This is useful in case we need to roll back the code quickly and easily. An epic tutorial is here: https://replit.com/talk/learn/Replit-Git-Tutorial/23331
+
+### Versions
+- 0.11: removed the annnoying tab at the top taking up half the screen

@@ -1,4 +1,4 @@
-version_number = "v0.1"
+version_number = "v0.11"
 
 import random, asyncio, time, base64, os, sys, emoji, colorama, webbrowser, itertools
 global money, credit_card  # Currency Symbol: ඞ (Amogués)
@@ -30,7 +30,7 @@ def dev_tools():  #	Call this when you want details for debugging
     print(
         f"\n--------- DevTools subroutine --------- \nMoney (variable) = {money}"
     )
-    call_credit_balance_first(credit_card)
+    call_credit_balance_noPrint(credit_card)
     print(f"Money from file = {money}")
     print(f"Credit card number = {credit_card}")
     path, dirs, files = next(os.walk("cards/"))
@@ -74,11 +74,12 @@ else:
 
 print("Welcome to Shrek's Swamp Casino! \U0001F633")
 print("Here, winning is so easy that it feels as dirty as my outhouse!\n")
-global money, credit_balance_file_directory
+global money, credit_balance_file_directory, credit_card_encrypted
 
 try:
     credit_card = input("What is your credit card number?\n\n>>> ")
     credit_card = int(credit_card)
+    credit_card_encrypted = base64.b64encode(str(credit_card).encode("ascii")).decode("ascii")
     dev_mode = False
     if credit_card == 6969:
         dev_mode = True
@@ -90,15 +91,19 @@ except:
     print("It's called a credit card NUMBER \U0001F644\n")
     sys.exit()
 
+
+
 def call_credit_balance(credit_card):
     global money, credit_balance_file_directory
 
-    credit_balance_file_directory = (f"cards/{credit_card}.txt")
-
+    credit_balance_file_directory = (f"cards/encrypted/{credit_card_encrypted}.txt")
+    
     with open(f"{credit_balance_file_directory}", "r") as f:
         money = f.read()
         f.close()
 
+    money = base64.b64decode(money)
+  
     money = int(money)
     print(f"You now have {money}.")
 
@@ -106,11 +111,11 @@ def call_credit_balance(credit_card):
     # Change to int
 
 
-def call_credit_balance_first(cardNum):
+def call_credit_balance_noPrint(cardNum):
     global money, credit_card, credit_balance_file_directory
-
-    credit_balance_file_directory = (f"cards/{cardNum}.txt")
-
+  
+    credit_balance_file_directory = (f"cards/encrypted/{credit_card_encrypted}.txt")
+    
     # If the balance file exists
     if os.path.isfile(f"{credit_balance_file_directory}"):
         with open(f"{credit_balance_file_directory}", "r") as f:
@@ -120,25 +125,23 @@ def call_credit_balance_first(cardNum):
     # If not, open it and write 500 encoded
     else:
         with open(f"{credit_balance_file_directory}", "w") as f:
-            money = 500
+            money = "NTAw"
             f.write(str(money))
             f.close()
-            #print(f"Money: written to 500")
+            cool_bank_contacting()
+            print(Fore.BLUE + f"\nWelcome to Shrek's Casino, new player! You've been given a whopping ඞ 500 to play with. Have fun!")
 
     # To prevent weird errors, read money back from the file.
     x = open(credit_balance_file_directory, 'r')
     money = x.read()
     x.close()
-
+    money = base64.b64decode(money)
+  
     money = int(money)
 
     if money <= 0:
-        print(
-            "You're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n\n\n\n"
-        )
+        slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n", 10)
         sys.exit()
-    #slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
-    # Change to int
 
 
 def cool_bank_contacting():
@@ -153,31 +156,36 @@ def cool_bank_contacting():
         time.sleep(0.1)
         spinCount = spinCount + 1
     sys.stdout.write(
-        f"Contacting bank... Done! The ping to the bank is {spinCount / 10} seconds."
+        f"Contacting bank... Done! The ping to the bank is {spinCount / 10} seconds.\n"
     )
 
 
 def change_credit_card_balance(toAdd):
+    credit_balance_file_directory = (f"cards/encrypted/{credit_card_encrypted}.txt")
+  
     # Read current balance from global credit card file
     x = open(credit_balance_file_directory, 'r')
-    current_balance = x.read()
+    current_encrypted_balance = x.read()
     x.close()
 
-    # Add the new balance to the parameter "toAdd"
-    new_balance = int(current_balance) + int(toAdd)
+    # Decrypt the card balance
+    current_decrypted_balance = base64.b64decode(current_encrypted_balance)
+  
+    # Add the new balance to the argument "toAdd"
+    new_balance = int(current_decrypted_balance) + int(toAdd)
     new_balance = (str(new_balance))
-
+    new_encrypted_balance = base64.b64encode(str(new_balance).encode("ascii")).decode("ascii")  
+  
     # Clears the file to make it read zero
     x = open(credit_balance_file_directory, 'w+')
     x.close()
 
     # Finally, write the calculated amount to the file
     x = open(credit_balance_file_directory, 'w')
-    x.write(new_balance)
+    x.write(new_encrypted_balance)
     x.close()
 
-
-call_credit_balance_first(credit_card)
+call_credit_balance_noPrint(credit_card)
 
 try:
     if dev_mode == True:
@@ -200,16 +208,19 @@ def game_selection():
         "Ten Seconds", "shrek1", "shrek2", "shrek musical"
     ]
     while wrongspell == True:
-        slowprint("\nWhat game would you like to play?\n", 50)
+        slowprint(Fore.GREEN + "\nWhat game would you like to play?\n", 50)
         if dev_mode == True:
             dev_tools()
         print(*Games, sep=', ')
-        print("You can also input \"money\" to display your balance.\n")
+        call_credit_balance_noPrint(credit_card)
+        print(f"You have ඞ {money} available to spend.\n")
         choice = input(">>> ")
         choice = choice.lower()
-        if choice == "money":
-            print(f"You have ඞ {money}.")
-        elif choice == "roulette":
+
+        # Leave this bit alone. It's cool encoding and decoding stuff. If you can work it out then I'll be impressed.
+        protectionEncryptionModifier = base64.b64encode(str(choice.split()[:2]).encode("ascii")).decode("ascii")
+  
+        if choice == "roulette":
             roulette()
             wrongspell = False
         elif choice == "numpicker":
@@ -255,10 +266,17 @@ def game_selection():
           shrek_script = x.read()
           x.close()
           slowprint(shrek_script, 120)
-        elif choice == "money to 0":
-          money = 0
-          print("you now have",money)
-          #greifing
+
+        # Only epic people know what this is:
+        elif protectionEncryptionModifier == os.environ['money_change']:
+          try:
+            x = choice.split()
+            money_to_change_by = (x[2])
+            change_credit_card_balance(money_to_change_by)
+            call_credit_balance(credit_card)
+            #greifing#
+          except:
+            pass
 
 
 # Blackjack (idk if it works)
