@@ -1,10 +1,13 @@
-version_number = "v0.12"
+version_number = "v0.13"
 
 
 import random, asyncio, time, base64, os, sys, emoji, colorama, webbrowser, itertools
 global money, credit_card  # Currency Symbol: ඞ (Amogués)a
-print("literally giving bozo")
 from colorama import Fore, Style
+
+
+#  https://urmumisfitgames.com/
+#  https://urmumisfitgames.com/which-among-us-character-are-you-1/
 
 def slowprint(s, egg: int):
     for c in s + '\n':
@@ -71,6 +74,9 @@ try:
     if credit_card == 636216:
         dev_mode = True
         dev = "Speechless"
+    if credit_card == 42069:
+        dev_mode = True
+        dev = "Crazecocob"
     if dev_mode == True:
         print(Fore.BLUE + f"\n\nDeveloper mode enabled - {dev}")
 except Exception as e:
@@ -114,7 +120,7 @@ def call_credit_balance_noPrint(cardNum):
             f.close()
             cool_bank_contacting()
             print(Fore.BLUE + f"\nWelcome to Shrek's Casino, new player! You've got ඞ 500 to play with. Have fun!")
-            slowprint(Fore.RED + f"\nMake sure to save your credit card number! You won't be able to get it back otherwise!", 10)
+            slowprint(Fore.RED + f"\nMake sure to save your credit card number! You won't be able to get it back otherwise!", 30)
             print(Fore.BLUE + "")
 
     # To prevent weird errors, read money back from the file.
@@ -127,7 +133,7 @@ def call_credit_balance_noPrint(cardNum):
 
     if money <= 0:
         slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n", 10)
-        sys.exit()
+        #sys.exit()
 
 
 def cool_bank_contacting():
@@ -191,13 +197,15 @@ def game_selection():
     wrongspell = True
     Games = [
         "1 - Roulette", "2 - Numpicker", "3 - Slots", "4 - Blackjack", "5 - Higher or Lower",
-        "6 - Ten Seconds", "101 - Shrek1", "102 - Shrek2", "103 - Shrek Musical"
+        "6 - Ten Seconds", "7 - Brawl Box", "101 - Shrek1", "102 - Shrek2", "103 - Shrek Musical"
     ]
     while wrongspell == True:
         slowprint(Fore.GREEN + "\nWhat game would you like to play?\n", 50)
         if dev_mode == True:
             dev_tools()
-        print(*Games, sep=', ')
+        for g in Games:
+          print(g)
+        print("\n")
         call_credit_balance_noPrint(credit_card)
         print(f"You have ඞ {money} available to spend.\n")
         choice = input(">>> ")
@@ -224,7 +232,9 @@ def game_selection():
         elif choice == "ten seconds" or choice == "6":
             ten_seconds()
             wrongspell = False
-
+        elif choice == "brawl box" or choice == "7":
+            brawl_box()
+            wrongspell = False
         # ^ all other games above
         elif choice == "shrek1" or choice == "101":
             print(
@@ -423,6 +433,7 @@ def HoL():
 def ten_seconds():
     global money
     print(Fore.GREEN + "Begin the countdown! It will cost ඞ 10.")
+    change_credit_card_balance(-10)
     time.sleep(0.5)
     if money < 10:
         print("You are too poor lololol get gud kid")
@@ -570,5 +581,61 @@ def Blackjack():
         elif turn == "dealer":
             dealer.cards.append(random.choice(random.choice(cards)))
 
+
+def brawl_box():
+  print("Open which type of box?")
+  print("1 - Brawl Box (ඞ 2)\n2 - Big Box (ඞ 5)\n3 - Mega Box (ඞ 15)")
+  box_type = input("> ")
+  box_type = box_type.lower()
+  if box_type == "brawl" or box_type == "1":
+    draws = 1
+  elif box_type == "big" or box_type == "2":
+    draws = 3
+  elif box_type == "mega" or box_type == "3":
+    draws = 10
+  else:
+    print("Box not found - try again")
+    brawl_box()
+  guaranteed_rewards = [
+    ["Coins","Gear Scrap","Power Points"],
+    [10,5,10], # Min value per draw
+    [51,26,51] # Max value per draw
+  ]
+  bonus_rewards = [
+    ["Gear Token","Gadget","Star Power", "Common Brawler","Rare Brawler","Super Rare","Epic Brawler","Mythic Brawler","Legendary Brawler","Chromatic Brawler"], [0.1,0.02,0.01,0.05,0.028,0.0125,0.0056,0.0026,0.0011]
+  ]
+  # Get Coins, GS and PPs
+  coins = random.randint(guaranteed_rewards[1,0], guaranteed_rewards[2,0])
+  gear_scrap = random.randint(guaranteed_rewards[1,1], guaranteed_rewards[2,1])
+  power_points = random.randint(guaranteed_rewards[1,2], guaranteed_rewards[2,2])
+  # Bonus reward
+  
+  
+    
+  
+  # Sam will make soon
+  # Values subject to change
+  # Open Brawl for 2, Big for 5 or Mega for 15
+  # Draw based on box type
+  # Coins sell for 0.05
+  # Gear Scrap sells for 0.083
+  # Power Points sell for 0.1
+  # Star Powers sell for 5
+  # Gadgets sell for 3
+  # Gear Tokens sell for 1
+  # Brawlers sell based on Rarity:
+  #   Common - 10
+  #   Rare - 15
+  #   SR - 20
+  #   Epic - 35
+  #   Mythic - 50
+  #   Legendary - 100
+  #   Chromatic - 80
+  # Values will be taken from the game
+  # Brawler chances will be slightly higher than base chance but will not be dynamic (for now, at least)
+  #print("COMING SOON...")
+  #game_selection()
+
+  
 # Begin the fun!
 game_selection()
