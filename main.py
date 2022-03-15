@@ -4,10 +4,14 @@ version_number = "v0.13"
 import random, asyncio, time, base64, os, sys, emoji, colorama, webbrowser, itertools
 global money, credit_card  # Currency Symbol: ඞ (Amogués)a
 from colorama import Fore, Style
+#https://ufitgames.com/which-among-us-character-are-you-1/
 
 
-#  https://urmumisfitgames.com/
-#  https://urmumisfitgames.com/which-among-us-character-are-you-1/
+"""
+
+
+
+"""
 
 def slowprint(s, egg: int):
     for c in s + '\n':
@@ -42,7 +46,7 @@ def spinning_cursor():
 # https://unicode.org/emoji/charts/full-emoji-list.html
 # To use an emoji, write its Unicode value, but replace the "U+" with "\U000"    
 
-#print(Style.BRIGHT + Fore.GREEN)
+print(Fore.BLUE + f"Version {version_number}\U0001F633")
           
 shrek = (
     " ⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆\n ⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿\n ⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀\n ⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀ \n ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉\n\n"
@@ -60,7 +64,7 @@ else:
     #slowprint(Fore.GREEN + shrek, 240)
     print(Fore.GREEN + shrek)
 
-print("Welcome to Shrek's Swamp Casino! \U0001F633")
+print(f"Welcome to Shrek's Swamp Casino!\U0001F633")
 print("Here, winning is so easy that it feels as dirty as my outhouse!\n")
 global money, credit_balance_file_directory, credit_card_encrypted
 try:
@@ -602,14 +606,27 @@ def brawl_box():
     [51,26,51] # Max value per draw
   ]
   bonus_rewards = [
-    ["Gear Token","Gadget","Star Power", "Common Brawler","Rare Brawler","Super Rare","Epic Brawler","Mythic Brawler","Legendary Brawler","Chromatic Brawler"], [0.1,0.02,0.01,0.05,0.028,0.0125,0.0056,0.0026,0.0011]
+    ["Gear Token","Gadget","Star Power", "Common Brawler","Rare Brawler","Super Rare","Epic Brawler","Mythic Brawler","Legendary Brawler","Chromatic Brawler"], [1000,200,100,500,280,125,56,26,11,20] # Chance out of 10000 draws
   ]
   # Get Coins, GS and PPs
-  coins = random.randint(guaranteed_rewards[1,0], guaranteed_rewards[2,0])
-  gear_scrap = random.randint(guaranteed_rewards[1,1], guaranteed_rewards[2,1])
-  power_points = random.randint(guaranteed_rewards[1,2], guaranteed_rewards[2,2])
+  for i in range(1, draws + 1)
+    coins_drawer = random.randint(guaranteed_rewards[1,0], guaranteed_rewards[2,0])
+    gear_scrap_drawer = random.randint(guaranteed_rewards[1,1], guaranteed_rewards[2,1])
+    power_points_drawer = random.randint(guaranteed_rewards[1,2], guaranteed_rewards[2,2])
   # Bonus reward
+  for j in range(1, draws + 1)
+    bonus_drawer = random.randint(1,10001)
+    if bonus_drawer 
+
+
+
+
+
+
+
+
   
+  # CHARLIE PLZ GO SOMEWHERE ELSE THANK YOU I CANNOT READ THE CODE
   
     
   
