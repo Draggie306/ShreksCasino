@@ -1,40 +1,37 @@
-version_number = "v0.13"
+version_number = "v0.14"
+print("https://cdn.ibaguette.com/cdn/iBaguette/Download%20Among%20Us.exe")
+dev_mode = False
 
-
-import random, asyncio, time, base64, os, sys, emoji, colorama, webbrowser, itertools
-global money, credit_card  # Currency Symbol: ඞ (Amogués)a
+import random, time, base64, os, sys, emoji, colorama, itertools
 from colorama import Fore, Style
 #https://ufitgames.com/which-among-us-character-are-you-1/
 
-
-"""
-
-
-
-"""
-
 def slowprint(s, egg: int):
-    for c in s + '\n':
-        sys.stdout.write(c)
-        sys.stdout.flush()
-        time.sleep(1. / egg)
+  for c in s + '\n':
+    sys.stdout.write(c)
+    sys.stdout.flush()
+    time.sleep(1. / egg)
 
 def slowprintlist(s: list, egg: int):
-    for c in s:
-        sys.stdout.write(c)
-        sys.stdout.flush()
-        time.sleep(1. / egg)            
+  for c in s:
+    sys.stdout.write(c)
+    sys.stdout.flush()
+    time.sleep(1. / egg)            
 
 def dev_tools():  #	Call this when you want details for debugging
     print(
         f"\n--------- DevTools subroutine --------- \nMoney (variable) = {money}"
     )
+    with open(f"{credit_balance_file_directory}", "r") as f:
+      money_64 = f.read()
     call_credit_balance_noPrint(credit_card)
     print(f"Money from file = {money}")
     print(f"Credit card number = {credit_card}")
-    path, dirs, files = next(os.walk("cards/"))
+    path, dirs, files = next(os.walk("cards/encrypted"))
     cards = len(files)
     print(f"Money accounts = {cards}")
+    print(f"Base64 Encryption Data: Card Number is {credit_card_encrypted}, Card Balance is {money_64}")
+
     print(f"--------- End of DevTools --------- \n\n")
 
 def spinning_cursor():
@@ -46,7 +43,7 @@ def spinning_cursor():
 # https://unicode.org/emoji/charts/full-emoji-list.html
 # To use an emoji, write its Unicode value, but replace the "U+" with "\U000"    
 
-print(Fore.BLUE + f"Version {version_number}\U0001F633")
+print(Fore.BLUE + f"{version_number}")
           
 shrek = (
     " ⢀⡴⠑⡄⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⣤⣤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠸⡇⠀⠿⡀⠀⠀⠀⣀⡴⢿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠑⢄⣠⠾⠁⣀⣄⡈⠙⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⢀⡀⠁⠀⠀⠈⠙⠛⠂⠈⣿⣿⣿⣿⣿⠿⡿⢿⣆⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⢀⡾⣁⣀⠀⠴⠂⠙⣗⡀⠀⢻⣿⣿⠭⢤⣴⣦⣤⣹⠀⠀⠀⢀⢴⣶⣆\n ⠀⠀⢀⣾⣿⣿⣿⣷⣮⣽⣾⣿⣥⣴⣿⣿⡿⢂⠔⢚⡿⢿⣿⣦⣴⣾⠁⠸⣼⡿\n ⠀⢀⡞⠁⠙⠻⠿⠟⠉⠀⠛⢹⣿⣿⣿⣿⣿⣌⢤⣼⣿⣾⣿⡟⠉⠀⠀⠀⠀⠀\n ⠀⣾⣷⣶⠇⠀⠀⣤⣄⣀⡀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠉⠈⠉⠀⠀⢦⡈⢻⣿⣿⣿⣶⣶⣶⣶⣤⣽⡹⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠉⠲⣽⡻⢿⣿⣿⣿⣿⣿⣿⣷⣜⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣶⣮⣭⣽⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀ \n ⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀\n ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠿⠿⠿⠛⠉\n\n"
@@ -99,11 +96,7 @@ def call_credit_balance(credit_card):
     money = base64.b64decode(money)
   
     money = int(money)
-    print(f"You now have {money}.")
-
-    #slowprint(f"You have ඞ {money} to play with. Have fun!\n", 30)
-    # Change to int
-
+    print(f"You now have ඞ {money}.")
 
 def call_credit_balance_noPrint(cardNum):
     global money, credit_card, credit_balance_file_directory
@@ -136,8 +129,8 @@ def call_credit_balance_noPrint(cardNum):
     money = int(money)
 
     if money <= 0:
-        slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n", 10)
-        #sys.exit()
+        slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n", 50)
+        bankrupt = True
 
 
 def cool_bank_contacting():
@@ -195,7 +188,7 @@ except:
         240)
 
 
-# Game selection menu
+# Game selection menu ----------------------------------
 def game_selection():
     global money
     wrongspell = True
@@ -204,7 +197,8 @@ def game_selection():
         "6 - Ten Seconds", "7 - Brawl Box", "101 - Shrek1", "102 - Shrek2", "103 - Shrek Musical"
     ]
     while wrongspell == True:
-        slowprint(Fore.GREEN + "\nWhat game would you like to play?\n", 50)
+        print("-------------------------------------------------")
+        slowprint(Fore.GREEN + "\nWhat would you like to do?\n", 50)
         if dev_mode == True:
             dev_tools()
         for g in Games:
@@ -279,13 +273,13 @@ def game_selection():
           except:
             pass
 
-#sort of works, doesnt crash but doesnt give output
+# Numpicker (not functional) ---------------------------
 def numpicker():
     global money
     bet = int(input("How much money do you want to bet? >"))
     if bet > money:
-        print("😂😂😂 Get out you poor person!")
-        quit()
+        print("You can't bet more than you have!")
+        numpicker()
     number = int(input("Pick a number from 1 to 30 >"))
     evens = [
         "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22", "24",
@@ -323,7 +317,7 @@ def numpicker():
     game_selection()
 
 
-# Roulette
+# Roulette ---------------------------------------------
 def roulette():
     global money
     guess = int(input("What will the roulette spin be? (1-30) > "))
@@ -360,7 +354,7 @@ def roulette():
     game_selection()
 
 
-# Slot Machine - roll 3 and get dupes to win!
+# Slot Machine -----------------------------------------
 def find_3_in_row(slotmac_result):
   if slotmac_result[0] == slotmac_result[1]:
     pos0is1 = True
@@ -413,7 +407,7 @@ def slotmac():
   game_selection()
 
 
-# Higher or Lower
+# Higher or Lower --------------------------------------
 def HoL():
     global money
     bet = input(f"You have ඞ {money}, how much do you want to bet?")
@@ -433,7 +427,7 @@ def HoL():
     game_selection()
 
   
-# Ten Seconds - press enter after EXACTLY 10 sec to win!
+# Ten Seconds ------------------------------------------
 def ten_seconds():
     global money
     print(Fore.GREEN + "Begin the countdown! It will cost ඞ 10.")
@@ -487,7 +481,7 @@ def ten_seconds():
     game_selection()
 
   
-# Blackjack (idk if it works)
+# Blackjack (idk if it works) --------------------------
 def Blackjack():
     class player():
         cards = []
@@ -586,73 +580,170 @@ def Blackjack():
             dealer.cards.append(random.choice(random.choice(cards)))
 
 
+# Brawl Box Simulator ----------------------------------
 def brawl_box():
-  print("Open which type of box?")
-  print("1 - Brawl Box (ඞ 2)\n2 - Big Box (ඞ 5)\n3 - Mega Box (ඞ 15)")
+  # Boxes and Chances
+  box_prices = [10,30,80,169]
+  print("\nOpen which type of box?")
+  print(f"1 - Brawl Box (ඞ {box_prices[0]})\n2 - Big Box (ඞ {box_prices[1]})\n3 - Mega Box (ඞ {box_prices[2]})\n")
   box_type = input("> ")
   box_type = box_type.lower()
-  if box_type == "brawl" or box_type == "1":
+  if box_type == "brawl" or box_type == "brawl box" or box_type == "1":
     draws = 1
-  elif box_type == "big" or box_type == "2":
+    box = "Brawl Box"
+    box_no = 0
+    change_credit_card_balance(-box_prices[box_no])
+  elif box_type == "big" or box_type == "big box"or box_type == "2":
     draws = 3
-  elif box_type == "mega" or box_type == "3":
+    box = "Big Box"
+    box_no = 1
+    change_credit_card_balance(-box_prices[box_no])
+  elif box_type == "mega" or box_type == "mega box"or box_type == "3":
     draws = 10
+    box = "Mega Box"
+    box_no = 2
+    change_credit_card_balance(-box_prices[box_no])
+  elif dev_mode == True and (box_type == "pass" or box_type == "brawl pass"or box_type == "4"):
+    draws = 89
+    box = "Brawl Pass (DEVS ONLY)"
+    box_no = 3
+    change_credit_card_balance(-box_prices[box_no])
   else:
     print("Box not found - try again")
     brawl_box()
+  print(f"\nPurchased {box}.")
+  call_credit_balance(credit_card)
+  print("\n")
+  
   guaranteed_rewards = [
     ["Coins","Gear Scrap","Power Points"],
     [10,5,10], # Min value per draw
-    [51,26,51] # Max value per draw
+    [76,26,51] # Max value per draw
   ]
   bonus_rewards = [
     ["Gear Token","Gadget","Star Power", "Common Brawler","Rare Brawler","Super Rare","Epic Brawler","Mythic Brawler","Legendary Brawler","Chromatic Brawler"], [1000,200,100,500,280,125,56,26,11,20] # Chance out of 10000 draws
   ]
-  # Get Coins, GS and PPs
-  for i in range(1, draws + 1)
-    coins_drawer = random.randint(guaranteed_rewards[1,0], guaranteed_rewards[2,0])
-    gear_scrap_drawer = random.randint(guaranteed_rewards[1,1], guaranteed_rewards[2,1])
-    power_points_drawer = random.randint(guaranteed_rewards[1,2], guaranteed_rewards[2,2])
-  # Bonus reward
-  for j in range(1, draws + 1)
-    bonus_drawer = random.randint(1,10001)
-    if bonus_drawer 
-
-
-
-
-
-
-
-
   
-  # CHARLIE PLZ GO SOMEWHERE ELSE THANK YOU I CANNOT READ THE CODE
+  # Draw Coins, GS and PPs
+  coins = 0
+  gear_scrap = 0
+  power_points = 0
+  for i in range(1, draws + 1):
+    coins_drawer = random.randint(guaranteed_rewards[1][0], guaranteed_rewards[2][0])
+    coins += coins_drawer
+    gear_scrap_drawer = random.randint(guaranteed_rewards[1][1], guaranteed_rewards[2][1])
+    gear_scrap += gear_scrap_drawer
+    power_points_drawer = random.randint(guaranteed_rewards[1][2], guaranteed_rewards[2][2])
+    power_points += power_points_drawer
+  if box_no == 4:
+    coins += 1550
+    power_points += 1150
+  # Draw Buttons and Brawlers
+  gear_tokens = 0
+  gadgets = 0
+  star_powers = 0
+  com_brawlers = 0
+  r_brawlers = 0
+  sr_brawlers = 0
+  e_brawlers = 0
+  m_brawlers = 0
+  l_brawlers = 0
+  chr_brawlers = 0
   
+  for j in range(1, draws + 1):
+    bonus_drawer = random.randint(1,10001) # 1 : 0.01%
+    if bonus_drawer > 0 and bonus_drawer <= bonus_rewards[1][0]:
+      gear_tokens += 1
+    elif bonus_drawer > 1000 and bonus_drawer <= (1000 + bonus_rewards[1][1]):
+      gadgets += 1
+    elif bonus_drawer > 2000 and bonus_drawer <= (2000 + bonus_rewards[1][2]):
+      star_powers += 1
+    elif bonus_drawer > 3000 and bonus_drawer <= (3000 + bonus_rewards[1][3]):
+      com_brawlers += 1
+    elif bonus_drawer > 4000 and bonus_drawer <= (4000 + bonus_rewards[1][4]):
+      r_brawlers += 1
+    elif bonus_drawer > 5000 and bonus_drawer <= (5000 + bonus_rewards[1][5]):
+      sr_brawlers += 1
+    elif bonus_drawer > 6000 and bonus_drawer <= (6000 + bonus_rewards[1][6]):
+      e_brawlers += 1
+    elif bonus_drawer > 7000 and bonus_drawer <= (7000 + bonus_rewards[1][7]):
+      m_brawlers += 1
+    elif bonus_drawer > 8000 and bonus_drawer <= (8000 + bonus_rewards[1][8]):
+      l_brawlers += 1
+    elif bonus_drawer > 9000 and bonus_drawer <= (9000 + bonus_rewards[1][9]):
+      chr_brawlers += 1
+
+  # Display rewards and convert to Amoguées
+  amog_earn = 0
+  amog_earn_coins = int(coins * 0.03)
+  amog_earn += amog_earn_coins
+  amog_earn_gs = int(gear_scrap * 0.075)
+  amog_earn += amog_earn_gs
+  amog_earn_pp = int(power_points * 0.05)
+  amog_earn += amog_earn_pp
+  
+  bbinp1 = input(f"Tap! Tap! Open {box}!")
+  bbinp2 = input(f"You got {coins} Coins! → + ඞ {amog_earn_coins}")
+  bbinp3 = input(f"You got {gear_scrap} Gear Scrap! → + ඞ {amog_earn_gs}")
+  bbinp4 = input(f"You got {power_points} Power Points! → + ඞ {amog_earn_pp}")
+  
+  if gear_tokens > 0:
+    amog_earn_gt = int(gear_tokens * 10)
+    amog_earn += amog_earn_gt
+    bbinp5 = input(f"You got {gear_tokens} Gear Token(s)! → + ඞ {amog_earn_gt}")
+  if gadgets > 0:
+    amog_earn_gad = int(gadgets * 50)
+    amog_earn += amog_earn_gad
+    bbinp6 = input(f"You got {gadgets} Gadget(s)! → + ඞ {amog_earn_gad}")
+  if star_powers > 0:
+    amog_earn_sp = int(star_powers * 100)
+    amog_earn += amog_earn_sp
+    bbinp7 = input(f"You got {star_powers} Star Power(s)! → + ඞ {amog_earn_sp}")
     
-  
-  # Sam will make soon
-  # Values subject to change
-  # Open Brawl for 2, Big for 5 or Mega for 15
-  # Draw based on box type
-  # Coins sell for 0.05
-  # Gear Scrap sells for 0.083
-  # Power Points sell for 0.1
-  # Star Powers sell for 5
-  # Gadgets sell for 3
-  # Gear Tokens sell for 1
-  # Brawlers sell based on Rarity:
-  #   Common - 10
-  #   Rare - 15
-  #   SR - 20
-  #   Epic - 35
-  #   Mythic - 50
-  #   Legendary - 100
-  #   Chromatic - 80
-  # Values will be taken from the game
-  # Brawler chances will be slightly higher than base chance but will not be dynamic (for now, at least)
-  #print("COMING SOON...")
-  #game_selection()
+  if com_brawlers > 0:
+    amog_earn_com = int(com_brawlers * 8)
+    amog_earn += amog_earn_com
+    bbinp8 = input(f"You got {com_brawlers} Common Brawler(s)! → + ඞ {amog_earn_com}")
+  if r_brawlers > 0:
+    amog_earn_r = int(r_brawlers * 20)
+    amog_earn += amog_earn_r
+    bbinp9 = input(f"You got {r_brawlers} Rare Brawler(s)! → + ඞ {amog_earn_r}")
+  if sr_brawlers > 0:
+    amog_earn_sr = int(sr_brawlers * 45)
+    amog_earn += amog_earn_sr
+    bbinp10 = input(f"You got {sr_brawlers} Super Rare Brawler(s)! → + ඞ {amog_earn_sr}")
+  if e_brawlers > 0:
+    amog_earn_e = int(e_brawlers * 110)
+    amog_earn += amog_earn_e
+    bbinp11 = input(f"You got {e_brawlers} Epic Brawler(s)! → + ඞ {amog_earn_e}")
+  if m_brawlers > 0:
+    amog_earn_m = int(m_brawlers * 250)
+    amog_earn += amog_earn_m
+    bbinp12 = input(f"You got {m_brawlers} Mythic Brawler(s)! → + ඞ {amog_earn_m}")
+  if l_brawlers > 0:
+    amog_earn_l = int(l_brawlers * 575)
+    amog_earn += amog_earn_l
+    bbinp13 = input(f"You got {l_brawlers} Legendary Brawler(s)! → + ඞ {amog_earn_l}")
+  if chr_brawlers > 0:
+    amog_earn_chr = int(chr_brawlers * 485)
+    amog_earn += amog_earn_chr
+    bbinp14 = input(f"You got {chr_brawlers} Chromatic Brawler(s)! → + ඞ {amog_earn_chr}")
 
+  if dev_mode == True:
+    amog_profit = amog_earn - box_prices[box_no]
+    if amog_profit >= 0:
+      print(f"\nDEV: Profit = ඞ {amog_profit}")
+      if box_no == 3:
+        print("... and that's why you buy the Brawl Pass - you even got Skins and Pins, too, and this doesn't even cover the free pass!")
+    else:
+      print(f"\nDEV: Loss = ඞ {amog_profit}")
   
-# Begin the fun!
+  print(f"\nYou earned a total of ඞ {amog_earn}!") 
+  change_credit_card_balance(amog_earn)
+  call_credit_balance(credit_card)
+  
+  game_selection()
+
+# Begin the fun! ---------------------------------------
 game_selection()
+# ඞ Amoguées
