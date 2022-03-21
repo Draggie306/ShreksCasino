@@ -1,4 +1,4 @@
-version_number = "v0.14"
+version_number = "v0.15"
 print("https://cdn.ibaguette.com/cdn/iBaguette/Download%20Among%20Us.exe")
 dev_mode = False
 
@@ -63,7 +63,8 @@ else:
 
 print(f"Welcome to Shrek's Swamp Casino!\U0001F633")
 print("Here, winning is so easy that it feels as dirty as my outhouse!\n")
-global money, credit_balance_file_directory, credit_card_encrypted
+global money, credit_balance_file_directory, credit_card_encrypted, multiplier
+multiplier = 1
 try:
     credit_card = input("What is your credit card number?\n\n>>> ")
     credit_card = int(credit_card)
@@ -150,6 +151,7 @@ def cool_bank_contacting():
 
 
 def change_credit_card_balance(toAdd):
+    global multiplier
     credit_balance_file_directory = (f"cards/encrypted/{credit_card_encrypted}.txt")
   
     # Read current balance from global credit card file
@@ -161,7 +163,8 @@ def change_credit_card_balance(toAdd):
     current_decrypted_balance = base64.b64decode(current_encrypted_balance)
   
     # Add the new balance to the argument "toAdd"
-    new_balance = int(current_decrypted_balance) + int(toAdd)
+    multiplier = toAdd * multiplier
+    new_balance = int(current_decrypted_balance) + multiplier
     new_balance = (str(new_balance))
     new_encrypted_balance = base64.b64encode(str(new_balance).encode("ascii")).decode("ascii")  
   
@@ -190,11 +193,11 @@ except:
 
 # Game selection menu ----------------------------------
 def game_selection():
-    global money
+    global money, multiplier
     wrongspell = True
     Games = [
         "1 - Roulette", "2 - Numpicker", "3 - Slots", "4 - Blackjack", "5 - Higher or Lower",
-        "6 - Ten Seconds", "7 - Brawl Box", "101 - Shrek1", "102 - Shrek2", "103 - Shrek Musical"
+        "6 - Ten Seconds", "7 - Brawl Box", "101 - Shrek1", "102 - Shrek2", "103 - Shrek Musical", "M - Increase Reward Multiplier"
     ]
     while wrongspell == True:
         print("-------------------------------------------------")
@@ -211,8 +214,15 @@ def game_selection():
 
         # Leave this bit alone. It's cool encoding and decoding stuff. If you can work it out then I'll be impressed.
         protectionEncryptionModifier = base64.b64encode(str(choice.split()[:2]).encode("ascii")).decode("ascii")
-      
-        if choice == "roulette" or choice == "1":
+        if choice == "m":
+          multiplier_input = int(input("Enter the amount you wish to multiply all future bets by. > "))
+          if multiplier_input > 0:
+            multiplier = multiplier_input
+            print(f"Ok, all bets will now be multiplied by {multiplier}×.")
+          elif multiplier_input <= 0:
+            print("Invalid. Please use a multiplier of 1 or more.")
+            game_selection()
+        elif choice == "roulette" or choice == "1":
             roulette()
             wrongspell = False
         elif choice == "numpicker" or choice == "2":
@@ -276,11 +286,15 @@ def game_selection():
 # Numpicker (not functional) ---------------------------
 def numpicker():
     global money
+    number_valid = False
     bet = int(input("How much money do you want to bet? >"))
     if bet > money:
         print("You can't bet more than you have!")
         numpicker()
-    number = int(input("Pick a number from 1 to 30 >"))
+    while number_valid == False:
+      number = int(input("Pick a number from 1 to 30 >"))
+      if number > 0 and number < 31:
+        number_valid = True
     evens = [
         "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22", "24",
         "26", "28", "30"
@@ -297,18 +311,18 @@ def numpicker():
         bet = bet * 5
         money = money + bet
         change_credit_card_balance(money)
-        print("well done, 5x bonus!")
+        print("Well done! 5× bonus!")
         call_credit_balance(credit_card)
 
         if number == "10" or "20" or "30":
             bet = bet * 3
             money = money + bet
             change_credit_card_balance(money)
-            print("good job, 3x bonus!")
+            print("Good job! 3× bonus!")
             call_credit_balance(credit_card)
 
         if number < 5:
-            print("You get a 2× bonus, WOO HOO!")
+            print("2× bonus! WOO HOO!")
             bet = bet * 2
             money = money + bet
             change_credit_card_balance(money)
@@ -377,8 +391,10 @@ def find_3_in_row(slotmac_result):
   return in_a_row
 # Slot Machine - continued
 def slotmac():
-  global money
-  print("Pulling the slot machine... You have been charged ඞ 10.")
+  global money, multiplier
+  multiplier_amount = -10 * multiplier
+  multi_am_pos = -(multiplier_amount)
+  print(f"Pulling the slot machine... You have been charged ඞ {multi_am_pos}.")
   change_credit_card_balance(-10)
   call_credit_balance(credit_card)
   pull = ["\U0001F34B", "\U0001F352", "\U0001F34A", "\U0001F346","\U0001F347","\U0001F34C","\U0001F34E","\U0001F353"]
@@ -391,16 +407,21 @@ def slotmac():
   three_in_a_row = find_3_in_row(slotmac_result)
   if three_in_a_row == 3:
     if slotmac_result[0] == "\U0001F346":
-      print("\n3 IN A ROW! You win ඞ 500 × 5 \U0001F346 bonus!")
+      multiplier_winning = 2500 * multiplier
       change_credit_card_balance(2500)
+      print(f"\n3 IN A ROW! You win ඞ {multiplier_winning} \U0001F346 bonus!")
       call_credit_balance(credit_card)
+    
     else:
-      print("\n3 IN A ROW! You win ඞ 500!")
-      change_credit_card_balance(500)
+      multiplier_winning = 500 * multiplier
+      change_credit_card_balance(500)   
+      print(f"\n3 IN A ROW! You win ඞ {multiplier_winning}!")
       call_credit_balance(credit_card)
   elif three_in_a_row == 2:
-    print("\n2 in a row! You win ඞ 25!")
-    change_credit_card_balance(25)
+    multiplier_winning = 25 * multiplier
+    change_credit_card_balance(-25)
+    print(f"\n2 in a row! You win ඞ {multiplier_winning}!")
+    change_credit_card_balance(multiplier_winning)
     call_credit_balance(credit_card)
   else:
     print("\nYou lose...")

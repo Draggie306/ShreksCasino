@@ -1,3 +1,9 @@
+## Versions
+- 0.11: removed the annnoying tab at the top taking up half the screen
+- 0.14:
+  - added Brawl Box Simulator - brawl_box()
+  - improved divisions between subroutines and games to allow for easier management and player experience
+
 # TO DO LIST:
 - Fix the code
 - Add more games
@@ -16,9 +22,3 @@
 
 # OTHER STUFF
 - Use the **Version Control** tab on the left when you want to save some code you've done. This is useful in case we need to roll back the code quickly and easily. An epic tutorial is here: https://replit.com/talk/learn/Replit-Git-Tutorial/23331
-
-### Versions
-- 0.11: removed the annnoying tab at the top taking up half the screen
-- 0.14:
-  - added Brawl Box Simulator - brawl_box()
-  - improved divisions between subroutines and games to allow for easier management and player experience
