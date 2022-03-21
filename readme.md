@@ -7,6 +7,14 @@
   - improved divisions between subroutines and games to allow for easier management and player experience
 - 0.15:
   - first implementation of multiplier money
+- 0.17:
+  - Slot machine now only *in a row* rather than if any two were in the machine outpu
+  - Fixed Slots giving ridiculous sums of money every time
+  - Made multiplier more efficient
+  - Improved DevTools
+
+
+
 
 # TO DO LIST:
 - Fix the code

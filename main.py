@@ -1,10 +1,10 @@
-version_number = "v0.16"
-print("https://cdn.ibaguette.com/cdn/iBaguette/Download%20Among%20Us.exe")
+version_number = "v0.17"
 dev_mode = False
 
-import random, time, base64, os, sys, emoji, colorama, itertools
+import random, time, base64, os, sys, itertools
 from colorama import Fore, Style
 #https://ufitgames.com/which-among-us-character-are-you-1/
+balls = random.randint(1,1000000000000000000000)
 
 def slowprint(s, egg: int):
   for c in s + '\n':
@@ -130,7 +130,7 @@ def call_credit_balance_noPrint(cardNum):
     money = int(money)
 
     if money <= 0:
-        slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card in order to play.\n\n\n\n", 50)
+        slowprint(Fore.RED + "\n\nYou're bankrupt. Please apply for a loan with a new credit card or work in order to play at the casino.\n", 50)
         bankrupt = True
 
 
@@ -163,10 +163,12 @@ def change_credit_card_balance(toAdd):
     current_decrypted_balance = base64.b64decode(current_encrypted_balance)
   
     # Add the new balance to the argument "toAdd"
-    multiplier = toAdd * multiplier
-    new_balance = int(current_decrypted_balance) + multiplier
-    new_balance = (str(new_balance))
-    new_encrypted_balance = base64.b64encode(str(new_balance).encode("ascii")).decode("ascii")  
+    multipliedSum = toAdd * multiplier
+    new_balance = str(int(current_decrypted_balance) + multipliedSum)
+    new_encrypted_balance = base64.b64encode(str(new_balance).encode("ascii")).decode("ascii") 
+
+  
+    print(Fore.BLUE + f"\n---DEVELOPER---\ntoAdd:{toAdd}\nmultipliedSum: {multipliedSum}\nmultiplier: {multiplier}\ncurrent_decrypted_balance: {current_decrypted_balance}\nnew_balance: {new_balance}\nnew_encrypted_balance: {new_encrypted_balance}\n\n------\n")
   
     # Clears the file to make it read zero
     x = open(credit_balance_file_directory, 'w+')
@@ -265,7 +267,7 @@ def game_selection():
             call_credit_balance(credit_card)
         elif choice == "dev":
             raise SystemExit(
-                f'{slowprint("Deez FAT balls are in your mouth right now!", 10)}'
+                f'{slowprint("Deez FAT balls are in your mouth right now!", 7)}'
             )
         elif choice == "shreks":
           x = open ("shrek1_transcript.txt", 'r')
@@ -276,8 +278,10 @@ def game_selection():
         # Only epic people know what this is:
         elif protectionEncryptionModifier == os.environ['money_change']:
           try:
+            print(Fore.BLUE + "Initiated...")
             x = choice.split()
             money_to_change_by = (x[2])
+            print(f"money_to_change_by: {money_to_change_by}")
             change_credit_card_balance(money_to_change_by)
             call_credit_balance(credit_card)
           except:
@@ -379,12 +383,10 @@ def find_3_in_row(slotmac_result):
   else:
     pos1is2 = False
   if slotmac_result[0] == slotmac_result[2]:
-    pos0is2 = True
-  else:
-    pos0is2 = False
+    print("2 in the slot machine but not in a row. Sorry!")
   if pos0is1 == True and pos1is2 == True:
     in_a_row = 3
-  elif pos0is1 == True or pos1is2 == True or pos0is2 == True:
+  elif pos0is1 == True or pos1is2 == True:
     in_a_row = 2
   else:
     in_a_row = 1
@@ -419,9 +421,8 @@ def slotmac():
       call_credit_balance(credit_card)
   elif three_in_a_row == 2:
     multiplier_winning = 25 * multiplier
-    change_credit_card_balance(-25)
+    change_credit_card_balance(25)
     print(f"\n2 in a row! You win ඞ {multiplier_winning}!")
-    change_credit_card_balance(multiplier_winning)
     call_credit_balance(credit_card)
   else:
     print("\nYou lose...")
