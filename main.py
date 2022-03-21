@@ -1,4 +1,4 @@
-version_number = "v0.15"
+version_number = "v0.16"
 print("https://cdn.ibaguette.com/cdn/iBaguette/Download%20Among%20Us.exe")
 dev_mode = False
 

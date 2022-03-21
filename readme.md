@@ -1,14 +1,18 @@
 ## Versions
+> Note: check https://github.com/Draggie306/ShreksCasino/commits/main for official commits
+
 - 0.11: removed the annnoying tab at the top taking up half the screen
 - 0.14:
   - added Brawl Box Simulator - brawl_box()
   - improved divisions between subroutines and games to allow for easier management and player experience
+- 0.15:
+  - first implementation of multiplier money
 
 # TO DO LIST:
 - Fix the code
 - Add more games
 - Make Konami Easter egg once per account, but increase reward
-- ur mom
+- fix the multiplier
 
 
 # HOW TO USE MY SUBROUTINES
